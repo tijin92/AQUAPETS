@@ -1,0 +1,40 @@
+<!-- razorpayPaymentPage.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razorpay Payment</title>
+</head>
+<body>
+
+    <!-- Display order details or any additional information to the user -->
+    <h2>Order Details:</h2>
+    <p>Order ID: <%= order.id %></p>
+    <p>Amount: <%= order.amount / 100 %> INR</p>
+
+    <!-- Razorpay form -->
+    <form action="/razorpay/callback" method="POST">
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="<%= key_id %>"
+            data-amount="<%= order.amount %>"
+            data-currency="INR"
+            data-order_id="<%= order.id %>"
+            data-buttontext="Pay with Razorpay"
+            data-name="Your Company Name"
+            data-description="Payment for Order <%= order.id %>"
+            data-image="https://your-logo-url.png"
+            data-prefill.name="<%= name %>"
+            data-prefill.email="<%= email %>"
+            data-prefill.contact="<%= mobile %>"
+            data-theme.color="#F37254"
+        ></script>
+        <input type="hidden" custom="Hidden Element" name="hidden">
+    </form>
+
+    <!-- Additional content or instructions for the user -->
+
+</body>
+</html>

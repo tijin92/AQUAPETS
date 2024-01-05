@@ -1,0 +1,348 @@
+<%- include('../layouts/header.ejs')  %> 
+	
+	<!--PreLoader-->
+<div class="loader">
+    <div class="loader-inner">
+        <div class="circle"></div>
+    </div>
+</div>
+<!--PreLoader Ends-->
+
+<!-- header -->
+<div class="top-header-area" id="sticker">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-center">
+                <div class="main-menu-wrap">
+                    <!-- logo -->
+                    <div class="site-logo">
+                        <a href="/user">
+                            <img src="/images/logo copy.png" alt="" width="50px">
+                            <span class="text-white text-bold">AQUApets.in</span>
+                        </a>
+                    </div>
+                    <!-- logo -->
+
+                    <!-- menu start -->
+                    <nav class="main-menu">
+                        <ul>
+                          <li class="current-list-item">
+                            <a href="/user/home">Home</a>
+                          </li>
+                          <!-- <li><a href="about.html">About</a></li> -->
+                          <li>
+                            <a href="#">Categories</a>
+                            <ul class="sub-menu">
+            
+                              <% if(allCategory.length > 0){ %> <% allCategory.forEach((category,
+                                index) => { %>
+                                <li><a href="/user/<%= category.name %>"><%= category.name %></a></li>
+                                <% }); %> <% }else{ %>
+                                <li><a href="#">No pages</a></li>
+                              <% } %>
+                              
+                            </ul>
+                          </li>
+                          <!--
+                          <li>
+                            <a href="news.html">News</a>
+                            <ul class="sub-menu">
+                              <li><a href="news.html">News</a></li>
+                              <li><a href="single-news.html">Single News</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="contact.html">Contact</a></li>
+                        -->
+                          <li>
+                            <a href="/user/home">Shop</a>
+                            <ul class="sub-menu">
+                              <li><a href="/user/home">Shop</a></li>
+                              <li><a href="/user/order">Orders</a></li>
+                              <li><a href="/user/cart">Cart</a></li>
+                              <li><a href="/user/wishList">Wish List</a></li>
+                              <li><a href="/user/wallet">Wallet</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div class="header-icons">
+                              <a class="mobile-hide" href="/user/myAccount"
+                                ><i class="fa fa-user"></i>
+                              </a>
+                              <a class="shopping-cart" href="/user/cart"
+                                ><i class="fas fa-shopping-cart"></i>
+                              </a>
+
+                              <a class="mobile-hide" href="/user/logout"
+                                >Logout</a>
+                              
+                            </div>
+                          </li>
+                        </ul>
+                      </nav>
+                    <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                    <div class="mobile-menu"></div>
+                    <!-- menu end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+<!-- search area -->
+<div class="search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                <div class="search-bar">
+                    <div class="search-bar-tablecell">
+                        <h3>Search For:</h3>
+                        <input type="text" placeholder="Keywords">
+                        <button type="submit">Search <i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search arewa -->
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p></p>
+                    <h1>Order Cancellation</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- order details -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="bg-light rounded p-4">
+        <h5 class="mb-4 ">Order Details</h5>
+        <div class="table-responsive">
+          <!-- Iterate through each order -->
+          <% orders.forEach(order => { %>
+            <div class="order-column mb-4">
+              <h6 class="text-center">Order ID: <%= order.orderID %></h6>    
+              <table class="table table-bordered sub-table">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price Per Item</th>
+                    <!-- Add more details as needed -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Iterate through each order item -->
+                  <% order.orderItems.forEach(item => { %>
+                    <tr>
+                      <td><%= item.product.name %></td>
+                      <td><%= item.quantity %></td>
+                      <td><%= item.pricePerItem %></td>
+                      <!-- Add more details as needed -->
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <p class="text-center">Total Amount: Rs.<%= order.totalAmount %>/-</p>
+              <br>
+              <h5 class="mb-4 ">Reason for cancellation</h5>
+              <div class="text-start">
+              
+                <form id="checkoutForm" method="post" action="/user/cancelOrder" style="display: inline-block;">
+                  <input type="hidden" name="orderId" value="<%= order._id %>">
+
+                  <!-- Add radio buttons for cancellation reasons -->
+                  <div class="form-check">
+                    <label for="reason1">
+                      <input type="radio" id="reason1" name="cancellationReason" value="I have changed my mind" required> I have changed my mind
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason2">
+                      <input type="radio" id="reason2" name="cancellationReason" value="I want to change address for the order" required> I want to change address for the order
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason3">
+                      <input type="radio" id="reason3" name="cancellationReason" value="I want to convert my order to prepaid" required> I want to convert my order to prepaid
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason4">
+                      <input type="radio" id="reason4" name="cancellationReason" value="Price for the product has decresed" required> Price for the product has decresed
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason5">
+                      <input type="radio" id="reason5" name="cancellationReason" value="I want to cancel due to product quality issues" required> I want to cancel due to product quality issues
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason6">
+                      <input type="radio" id="reason6" name="cancellationReason" value="I want to change my phone number" required> I want to change my phone number
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason7">
+                      <input type="radio" id="reason7" name="cancellationReason" value="I have purchased the product elsewhere" required> I have purchased the product elsewhere
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason8">
+                      <input type="radio" id="reason8" name="cancellationReason" value="Product Damaged or Product no more Usable" required> Product Damaged or Product no more Usable
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason9">
+                      <input type="radio" id="reason9" name="cancellationReason" value="Product Died (purchased product is fish)" required> Product Died (purchased product is fish)
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label for="reason10">
+                      <input type="radio" id="reason10" name="cancellationReason" value="Others" required> Others
+                    </label>
+                  </div>
+                  <div>
+                    <label for="additionalComments">Additional Comments:</label>
+                    <textarea id="additionalComments" name="additionalComments" rows="4" cols="50"></textarea>
+                  </div>
+                  <!-- Add more reasons as needed --> 
+
+                  <% if (order.status !== 'Cancelled') { %>
+                    <button class="btn btn-danger btn-sm" type="submit">Cancel Order</button>
+                  <% } else { %>
+                    <button class="btn btn-danger btn-sm cancelled" type="submit" disabled>Order Cancelled</button>
+                  <% } %>
+                </form>
+
+              </div>
+            </div>
+          <% }); %> 
+          <% if (!orders || orders.length === 0) { %>
+            <p class="text-center">No orders found.</p>
+          <% } %>                              
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- order details end -->
+
+
+	
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">About us</h2>
+						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Get in Touch</h2>
+						<ul>
+							<li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+							<li>support@fruitkha.com</li>
+							<li>+00 111 222 3333</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="/user">Home</a></li>
+							<li><a href="/user">About</a></li>
+							<li><a href="/user">Shop</a></li>
+							<li><a href="/user">News</a></li>
+							<li><a href="/user">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">Subscribe</h2>
+						<p>Subscribe to our mailing list to get the latest updates.</p>
+						<form action="/user">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <p>Copyrights &copy; 2019 - <a href="/user">AQUApets.in</a>,  All Rights Reserved.<br>
+                    
+                </p>
+            </div>
+            <div class="col-lg-6 text-right col-md-12">
+                <div class="social-icons">
+                    <ul>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add event listener to the form
+        document.getElementById('checkoutForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Show SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to cancel the order. This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                // If the user clicks "Yes, cancel it!" button, proceed with form submission
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    });
+</script>
+	
+	<%- include('../layouts/footer.ejs')  %>

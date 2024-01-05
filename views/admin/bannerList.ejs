@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AQUApets Admin Panel</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- sweet alert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link href="/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <!-- Include Responsive extension CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <!-- Include DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <!-- Include DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Include Responsive extension JS -->
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function () {
+            $('#productList').DataTable({
+                responsive: true
+            });
+        });
+
+        // JavaScript function to update the hidden input field before submitting the form
+        function updateStatus(index) {
+            var selectedStatus = document.getElementById('status' + index).value;
+            document.getElementById('newStatus' + index).value = selectedStatus;
+            document.forms[index].submit();
+        }
+    </script>
+    
+    <style>
+        .address-column {
+            min-width: 100px; /* Set your desired minimum width */
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+   <!-- top and side nav starts -->
+
+   <div class="container-xxl position-relative bg-white d-flex p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="/admin/home" class="navbar-brand mx-4 mb-3">
+                <h3 class="text-primary">AQUApets.in</h3>
+            </a>
+        
+            <div class="navbar-nav w-100">
+                <a href="/admin/home" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                
+                <a href="/admin/salesReport" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Sales Report</a>
+
+                <a href="/admin/orderList" class="nav-item nav-link"><i class="far fa-file-alt me-2"></i>Orders</a>
+
+                <a href="/admin/categoryList" class="nav-item nav-link"><i class="fas fa-list"></i>Category</a>
+
+                <a href="/admin/userList" class="nav-item nav-link "><i class="fas fa-users"></i>Users</a>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fas fa-boxes"></i>Products</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="/admin/addProducts" class="dropdown-item">Add Products</a>
+                        <a href="/admin/productList" class="dropdown-item active">View & Update Products</a>
+                        
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-gift" aria-hidden="true"></i>Offer</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="/admin/addOffer" class="dropdown-item">Add Offer</a>
+                        <a href="/admin/viewOffer" class="dropdown-item">View & Update Offer</a>
+                        
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-list-alt"></i>Coupon</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="/admin/addCoupon" class="dropdown-item">Add Coupon</a>
+                        <a href="/admin/viewCoupon" class="dropdown-item">View & Update Coupon</a>
+                        
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Banner</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="/admin/addBanner" class="dropdown-item">Add Banner</a>
+                        <a href="/admin/viewBanner" class="dropdown-item">View & Update Banner</a>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+
+            <div class="navbar-nav align-items-center ms-auto">
+                
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                       
+                        <a href="/admin/logout" class="dropdown-item">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+<!-- top and side nav ends -->
+
+
+            <!-- Table Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                                        
+                    <div class="col-12">
+                        <div class="bg-light rounded h-100 p-4">
+
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-delay="5000">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Product Update</strong>
+                                </div>
+                                <div class="toast-body" id="successToast">
+                                    <!-- Success message will be displayed here. -->
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <span style="font-weight:bold; color: black;">Banners</span>
+                                <a href="/admin/addBanner" class="btn btn-primary btn-sm" style="float: right;" role="button">Add Banner</a>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table id="productList" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">buttonURL</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <% if (bannerData.length > 0) { 
+                                            bannerData.forEach(function(banner, index) { %>
+                                              <tr>
+                                                <th scope="row" style="text-align: center;"><%= index+1 %></th>
+                                                <td style="width: 200px;"><%= banner.title %></td>
+                                                <td><%= banner.description %></td>
+                                                <td>
+                                                    <% if (banner.image) { %>
+                                                        <img class="product-image" src="/productImages/<%= banner.image %>" alt="<%= banner.image %>" style="width: 100px; ">
+                                                        
+                                                    <% } else { %>
+                                                        
+                                                    <% } %>
+                                                </td>
+                                                <td><%= banner.bannerURL %></td>
+                                                <td >
+                                                <span class="<%= banner.status === 1 ? 'active' : 'blocked' %>">
+                                                    <% if (banner.status === 1) { %>Listed<% } else { %>Unlisted<% } %>
+                                                </span>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <a id="unlist" href="/admin/unListBanner?id=<%= banner._id %>" class="btn btn-primary btn-sm mt-1" role="button" onclick="confirmUnlistBanner(event)" data-unlist="<%= banner.status %>" style="width: 50px;">
+                                                        <% if (banner.status === 1) { %>Unlist<% } else { %>List<% } %>
+                                                    </a>
+                                                  
+                                                  <a href="/admin/editBanner?id=<%= banner._id %>" class="btn btn-primary btn-sm mt-1" role="button" style="width: 50px;" >Edit</a>
+                                                  
+                                                  <a id="delete" href="/admin/deleteBanner?id=<%= banner._id %>" class="btn btn-danger btn-sm mt-1" role="button" onclick="confirmDeleteBanner(event)" style="width: 60px;">Delete</a>
+                                                </td>
+                                              </tr>
+                                              <% }); %>
+                                          <% } else { %>
+                                            <tr>
+                                              <td colspan="5">No products found</td>
+                                            </tr>
+                                          <% } %>  
+                                          
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Table End -->
+
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">AQUApets.in</a>, All Right Reserved. 
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <script>
+            // JavaScript function to update the hidden input field before submitting the form
+            function updateStatus(index) {
+                var selectedStatus = document.getElementById('status' + index).value;
+                document.getElementById('newStatus' + index).value = selectedStatus;
+                document.forms[index].submit();
+            }
+
+        </script>
+        
+
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+    
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/chart/chart.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+    
+
+
+    <!-- Template Javascript -->
+    <script src="/js/main.js"></script>
+    
+    
+    <script>
+
+        // JavaScript function to confirm unlisting a banner
+        function confirmUnlistBanner(event) {
+            event.preventDefault();
+
+            const isUnlist = event.currentTarget.getAttribute("data-unlist") === "1";
+            const unlistButton = event.currentTarget;
+
+            if (isUnlist) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure?',
+                    text: 'Are you sure you want to unlist this product?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, unlist it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = unlistButton.getAttribute("href");
+                    }
+                });
+            } else {
+                window.location.href = unlistButton.getAttribute("href");
+            }
+        }
+
+
+
+        // Trigger the click event on the "unlist" button after the user clicks "Yes" in the SweetAlert confirmation
+        function triggerUnlistButtonClick() {
+            var unlistButton = document.getElementById('unlist');
+            if (unlistButton) {
+                unlistButton.click();
+            }
+        }
+
+
+        //Toast message 
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('successMessage');
+        const errorMessage = urlParams.get('errorMessage');
+        if (successMessage) {
+            const toast = new bootstrap.Toast(document.querySelector('.toast'));
+            const successToast = document.getElementById('successToast');
+            successToast.textContent = successMessage;
+            toast.show();
+        }else if(errorMessage){
+            const toast = new bootstrap.Toast(document.querySelector('.toast'));
+            const successToast = document.getElementById('successToast');
+            successToast.textContent = errorMessage;
+            toast.show();
+        }
+
+        function confirmDeleteBanner(event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        const deleteUrl = event.currentTarget.getAttribute("href");
+        
+        Swal.fire({
+            title: 'Delete Banner?',
+            text: 'Are you sure you want to delete this banner?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+            allowOutsideClick: false // Prevent dismissing by clicking outside
+        }).then((result) => {
+
+            if (result.isConfirmed) {     
+                window.location.href = deleteUrl;
+            } 
+
+        });
+    }
+    
+    </script>
+  
+
+</body>

@@ -1,0 +1,320 @@
+<%- include('../layouts/header.ejs')  %> 
+
+<script>
+    //To update the 
+  $(document).ready(function() {
+    $('.product-quantity input').on('input', function() {
+      var quantity = parseInt($(this).val());
+      var price = parseFloat($(this).closest('.table-body-row').find('.product-price').text().replace('$', '').trim());
+      var totalPrice = quantity * price;
+
+      $(this).closest('.table-body-row').find('.product-total').text( totalPrice.toFixed(2));
+    });
+  });
+</script>
+	
+	<!--PreLoader-->
+<div class="loader">
+    <div class="loader-inner">
+        <div class="circle"></div>
+    </div>
+</div>
+<!--PreLoader Ends-->
+
+<!-- header -->
+<div class="top-header-area" id="sticker">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-center">
+                <div class="main-menu-wrap">
+                    <!-- logo -->
+                    <div class="site-logo">
+                        <a href="/user">
+                            <img src="/images/logo copy.png" alt="" width="50px">
+                            <span class="text-white text-bold">AQUApets.in</span>
+                        </a>
+                    </div>
+                    <!-- logo -->
+
+                    <!-- menu start -->
+                    <nav class="main-menu">
+                        <ul>
+                          <li class="current-list-item">
+                            <a href="/user/home">Home</a>
+                          </li>
+                          <!-- <li><a href="about.html">About</a></li> -->
+                          <li>
+                            <a href="#">Categories</a>
+                            <ul class="sub-menu">
+            
+                              <% if(allCategory.length > 0){ %> <% allCategory.forEach((category,
+                                index) => { %>
+                                <li><a href="/user/<%= category.name %>"><%= category.name %></a></li>
+                                <% }); %> <% }else{ %>
+                                <li><a href="#">No pages</a></li>
+                              <% } %>
+                              
+                            </ul>
+                          </li>
+                          <!--
+                          <li>
+                            <a href="news.html">News</a>
+                            <ul class="sub-menu">
+                              <li><a href="news.html">News</a></li>
+                              <li><a href="single-news.html">Single News</a></li>
+                            </ul>
+                          </li>-->
+                          <!--
+                          <li><a href="contact.html">Contact</a></li>
+                        -->
+                          <li>
+                            <a href="/user/home">Shop</a>
+                            <ul class="sub-menu">
+                              <li><a href="/user/home">Shop</a></li>
+                              <li><a href="/user/order">Orders</a></li>
+                              <li><a href="/user/cart">Cart</a></li>
+                              <li><a href="/user/wishList">Wish List</a></li>
+                              <li><a href="/user/wallet">Wallet</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div class="header-icons">
+                              <a class="mobile-hide" href="/user/myAccount"
+                                ><i class="fa fa-user"></i>
+                              </a>
+                              <a class="shopping-cart" href="/user/cart"
+                                ><i class="fas fa-shopping-cart"></i>
+                              </a>
+
+                              <a class="mobile-hide" href="/user/logout"
+                                >Logout</a>
+                              
+                            </div>
+                          </li>
+                        </ul>
+                      </nav>
+                    <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                    <div class="mobile-menu"></div>
+                    <!-- menu end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+<!-- search area -->
+<div class="search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                <div class="search-bar">
+                    <div class="search-bar-tablecell">
+                        <h3>Search For:</h3>
+                        <input type="text" placeholder="Keywords">
+                        <button type="submit">Search <i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search arewa -->
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>See More Details</p>
+                    <h1><%= product.name %></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+
+<!-- single product -->
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="single-product-img">
+						<div class="product-image">
+                            <% if (product.image && product.image.length > 0) { %> <% const
+                            imagePath =
+                            product.image[0].replace('D:\\week_12\\AQUApets\\public', baseURL)
+                            %>
+                            <a href="/user/productDetailView/<%= product._id %>">
+                            <img
+                                class="product-image mt-3"
+                                src="<%= encodeURI(imagePath) %>"
+                                alt="<%= product.name %>"
+                            />
+                            </a>
+                            <% } else { %> <% } %>
+                        </div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="single-product-content">
+						<h3><%= product.name %></h3>
+						<p class="single-product-pricing"><span>Per piece</span></p>
+                        <% if(product.offer && product.offer.status && new Date(product.offer.expiryDate) >= new Date()){ %>
+                            <p class="product-price-underline">₹<%= product.price %></p>
+                            <p class="single-product-pricing">
+                            Offer ₹<%= product.offerPrice %>
+                            </p>
+                        <% } else { %>
+                            <p class="single-product-pricing">₹<%= product.price %></p>
+                        <% } %>
+						<p><%= product.description %></p>
+						<div class="single-product-form">
+							
+                            <form action="/user/addToCart" method="POST" class="cart-btn btn">
+                                <input type="hidden" name="product_id" value="<%= product._id %>">
+                                <button class="cart-btn btn" type="submit"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                            </form>
+
+                            <% const isProductInWishlist = userWishlist.includes(product._id.toString()) %>
+                    
+                            <form action="/user/addToWishList" method="POST" class="wish-btn btn">
+                                <input type="hidden" name="product_id" value="<%= product._id %>">
+
+                                <!-- Display "Add to Wishlist" or "Added to Wishlist" based on wishlist status -->
+                                <% if(isProductInWishlist) { %>
+                                    <button class="wish-btn2 btn" type="button" >
+                                        <i class="fas fa-shopping-cart"></i> Added to Wishlist
+                                    </button>
+                                <% } else { %>
+                                    <button class="wish-btn btn" type="submit">
+                                        <i class="fas fa-shopping-cart"></i> Add to Wishlist
+                                    </button>
+                                <% } %>
+                            </form>
+
+							<p><strong>Categories: </strong><%= product.category.name %></p>
+						</div>
+						<h4>Share:</h4>
+						<ul class="product-share">
+							<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href=""><i class="fab fa-twitter"></i></a></li>
+							<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+							<li><a href=""><i class="fab fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- end single product -->
+
+	
+<!-- footer -->
+<div class="footer-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-box about-widget">
+                    <h2 class="widget-title">About us</h2>
+                    <p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-box get-in-touch">
+                    <h2 class="widget-title">Get in Touch</h2>
+                    <ul>
+                        <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+                        <li>support@fruitkha.com</li>
+                        <li>+00 111 222 3333</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-box pages">
+                    <h2 class="widget-title">Pages</h2>
+                    <ul>
+                        <li><a href="/user">Home</a></li>
+                        <li><a href="/user">About</a></li>
+                        <li><a href="/user">Shop</a></li>
+                        <li><a href="/user">News</a></li>
+                        <li><a href="/user">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-box subscribe">
+                    <h2 class="widget-title">Subscribe</h2>
+                    <p>Subscribe to our mailing list to get the latest updates.</p>
+                    <form action="/user">
+                        <input type="email" placeholder="Email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end footer -->
+
+<!-- copyright -->
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <p>Copyrights &copy; 2019 - <a href="/user">AQUApets.in</a>,  All Rights Reserved.<br>
+                    
+                </p>
+            </div>
+            <div class="col-lg-6 text-right col-md-12">
+                <div class="social-icons">
+                    <ul>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const addToWishlistButtons = document.querySelectorAll('.wish-btn.btn');
+
+        addToWishlistButtons.forEach(button => {
+            button.addEventListener('click', async (event) => {
+                event.preventDefault();
+                const productId = button.querySelector('input[name="product_id"]').value;
+
+                // Check if the product is in the wishlist
+                const response = await fetch(`/user/wishListItems`);
+                const wishlistItems = await response.json();
+
+                const isInWishlist = wishlistItems.some(item => item.product_id._id === productId);
+
+                if (isInWishlist) {
+                    // Display a SweetAlert if the product is already in the wishlist
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Product Already in Wishlist',
+                        text: 'This product is already in your wishlist.',
+                    });
+
+                } else {
+                    // Perform your form submission logic here (e.g., submit the form)
+                    button.closest('form').submit();    
+                }
+            });
+        });
+    });
+</script>
+
+<%- include('../layouts/footer.ejs')  %> 

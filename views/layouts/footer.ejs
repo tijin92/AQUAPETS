@@ -1,0 +1,306 @@
+	<!-- end copyright -->
+	
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+
+	<!-- jquery -->
+	<script src="/assets/js/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap -->
+	<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+	<!-- count down -->
+	<script src="/assets/js/jquery.countdown.js"></script>
+	<!-- isotope -->
+	<script src="/assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<!-- waypoints -->
+	<script src="/assets/js/waypoints.js"></script>
+	<!-- owl carousel -->
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<!-- magnific popup -->
+	<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+	<!-- mean menu -->
+	<script src="/assets/js/jquery.meanmenu.min.js"></script>
+	<!-- sticker js -->
+	<script src="/assets/js/sticker.js"></script>
+	<!-- main js -->
+	<script src="/assets/js/main.js"></script>
+
+    
+	
+    <script>
+        //forget password
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('forget-password').onsubmit = function (e) {
+                    e.preventDefault();
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    let errors = [];
+        
+                    if (password.trim() === '') {
+                        errors.push('Please enter your password.');
+                    } else if (password.length < 8) {
+                        errors.push('Password must be at least 8 characters long.');
+                    } else if (!isStrongPassword(password)) {
+                        errors.push('Password should be strong (e.g., include uppercase, lowercase, numbers, and special characters).');
+                    } else if (password !== confirmPassword) {
+                        errors.push('Passwords do not match.');
+                    }
+        
+                    if (errors.length > 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: errors.join('\n')
+                        });
+                        return false;
+                    }
+        
+                    document.getElementById('forget-password').submit();
+                };
+        
+                function isStrongPassword(password) {
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+                    return passwordRegex.test(password);
+                }
+            });
+        
+        //forget
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('forget').onsubmit = function (e) {
+                    e.preventDefault();
+                    const email = document.getElementById('email').value;
+                    
+                    let errors = [];
+        
+                    if (email.trim() === '') {
+                        errors.push('Please enter your email address.');
+                    } else if (!isValidEmail(email)) {
+                        errors.push('Please enter a valid email address.');
+                    } 
+        
+                    if (errors.length > 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: errors.join('\n')
+                        });
+                        return false;
+                    }else{
+                        document.getElementById('forget').submit();
+                    }
+                };
+        
+                function isValidEmail(email) {
+                    const emailRegex = /^\S+@\S+\.\S+$/;
+                    return emailRegex.test(email);
+                }
+            });
+        
+        //login form
+        document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('fruitkha-contact').onsubmit = function (e) {
+                    e.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;       
+                    let errors = [];
+        
+                    if (email.trim() === '') {
+                        errors.push('Please enter your email address.');
+                    } else if (!isValidEmail(email)) {
+                        errors.push('Please enter a valid email address.');
+                    }
+        
+                    if (password.trim() === '') {
+                        errors.push('Please enter your password.');
+                    } else if (password.length < 8) {
+                        errors.push('Password must be at least 8 characters long.');
+                    } else if (!isStrongPassword(password)) {
+                        errors.push('Password should be strong (e.g., include uppercase, lowercase, numbers, and special characters).');
+                    } 
+        
+                    if (errors.length > 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: errors.join('\n')
+                        });
+                        return false;
+                    }else{
+                        document.getElementById('fruitkha-contact').submit();
+                    }
+        
+                    
+                };
+        
+                function isValidEmail(email) {
+                    const emailRegex = /^\S+@\S+\.\S+$/;
+                    return emailRegex.test(email);
+                }
+        
+                function isStrongPassword(password) {
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+                    return passwordRegex.test(password);
+                }
+            });
+        
+        //register
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('register').onsubmit = function (e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const mobile = document.getElementById('mobile').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+        
+                let errors = [];
+        
+                if (name.trim() === '') {
+                    errors.push('Please enter your name.');
+                } else if (!isValidName(name)) {
+                    errors.push('Please enter a valid name (only letters and spaces are allowed).');
+                }
+        
+                if (email.trim() === '') {
+                    errors.push('Please enter your email address.');
+                } else if (!isValidEmail(email)) {
+                    errors.push('Please enter a valid email address.');
+                }
+        
+                if (mobile.trim() === '') {
+                    errors.push('Please enter your mobile number.');
+                } else if (!isValidMobile(mobile)) {
+                    errors.push('Please enter a valid mobile.');
+                }
+        
+                if (password.trim() === '') {
+                    errors.push('Please enter your password.');
+                } else if (password.length < 8) {
+                    errors.push('Password must be at least 8 characters long.');
+                } else if (!isStrongPassword(password)) {
+                    errors.push('Password should be strong (e.g., include uppercase, lowercase, numbers, and special characters).');
+                } else if (password !== confirmPassword) {
+                    errors.push('Passwords do not match.');
+                }
+        
+            
+                if (errors.length > 0) {
+                    displaySweetAlert('error', 'Validation Error', errors.join('\n'));
+                    e.preventDefault(); 
+                } else {
+            
+                    document.getElementById('register').submit();
+                }
+            };
+        
+                function isValidName(name) {
+                    const nameRegex = /^[A-Za-z\s]+$/;
+                    return nameRegex.test(name);
+                }
+        
+                function isValidEmail(email) {
+                    const emailRegex = /^\S+@\S+\.\S+$/;
+                    return emailRegex.test(email);
+                }
+        
+                function isValidMobile(mobile) {
+                    const mobileRegex = /^[0-9]{10}$/;
+                    return mobileRegex.test(mobile);
+                }
+        
+                function isStrongPassword(password) {
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+                    return passwordRegex.test(password);
+                }
+                function displaySweetAlert(icon, title, text) {
+                Swal.fire({
+                    icon: icon,
+                    title: title,
+                    text: text
+                });
+            }
+        })
+        
+        //To update the quantity in cart
+        document.addEventListener('DOMContentLoaded', function () {
+           const quantityInputs = document.querySelectorAll('.quantity-input');
+        
+           quantityInputs.forEach(input => {
+              input.addEventListener('change', async function () {
+                 const itemId = input.dataset.itemId;
+                 const newQuantity = input.value;
+        
+                 // Send update request to the server
+                 const response = await fetch('/user/updateCartQuantity', {
+                    method: 'POST',
+                    headers: {
+                       'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ itemId, newQuantity }),
+                 });
+        
+                 // Handle the response as needed
+                 const result = await response.json();
+                 console.log(result);
+        
+                 // Optionally, you can update the total in the front-end based on the response from the server
+              });
+           });
+        });
+        
+        
+        //Delete item from cart
+        document.addEventListener('DOMContentLoaded', function () {
+           const removeButtons = document.querySelectorAll('.remove-item');
+        
+           removeButtons.forEach(button => {
+              button.addEventListener('click', async function (event) {
+                 event.preventDefault();
+        
+                 const itemId = button.dataset.itemId;
+        
+                 // Send delete request to the server
+                 const response = await fetch('/user/removeCartItem', {
+                    method: 'DELETE',
+                    headers: {
+                       'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ itemId }),
+                 });
+        
+                 // Handle the response as needed
+                 const result = await response.json();
+                 console.log(result);
+        
+                 // Optionally, you can remove the corresponding row from the frontend based on the response from the server
+                 if (result.success) {
+                    const rowToRemove = button.closest('.table-body-row');
+                    rowToRemove.remove();
+
+                    // Check if the cart is empty and display a SweetAlert
+                    const cartRows = document.querySelectorAll('.table-body-row');
+                    if (cartRows.length === 0) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Cart is Empty',
+                            text: 'Your cart is now empty. Redirecting to home...',
+                        }).then(() => {
+                            window.location.href = '/user/home';
+                        });
+                    }
+                 }
+              });
+           });
+        });
+
+        
+
+        
+        
+        
+        </script>
+	
+
+</body>
+
+
+</html>

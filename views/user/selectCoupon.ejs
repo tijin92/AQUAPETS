@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>AQUApets.in</title>
+
+	<!-- sweet alert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="/assets/img/logo copy.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="/assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="/assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="/assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="/assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="/assets/css/responsive.css">
+	
+
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	
+	<style>
+		form {
+		  display: flex;
+		  flex-direction: column;
+		}
+	  
+		input[type="text"] {
+		  border: none;
+		  border-bottom: 1px solid black; /* You can adjust the color and thickness */
+		  margin-bottom: 10px; /* Optional: Add some spacing */
+		}
+	  
+	</style>
+
+</head>
+<body>
+	
+	<!--PreLoader-->
+<div class="loader">
+    <div class="loader-inner">
+        <div class="circle"></div>
+    </div>
+</div>
+<!--PreLoader Ends-->
+
+<!-- header -->
+<div class="top-header-area" id="sticker">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-center">
+                <div class="main-menu-wrap">
+                    <!-- logo -->
+                    <div class="site-logo">
+                        <a href="/user">
+                            <img src="/images/logo copy.png" alt="" width="50px">
+                            <span class="text-white text-bold">AQUApets.in</span>
+                        </a>
+                    </div>
+                    <!-- logo -->
+
+                    <!-- menu start -->
+                    <nav class="main-menu">
+                        <ul>
+                          <li class="current-list-item">
+                            <a href="/user/home">Home</a>
+                          </li>
+                          <!-- <li><a href="about.html">About</a></li> -->
+                          <li>
+                            <a href="#">Categories</a>
+                            <ul class="sub-menu">
+            
+                              <% if(allCategory.length > 0){ %> <% allCategory.forEach((category,
+                                index) => { %>
+                                <li><a href="/user/<%= category.name %>"><%= category.name %></a></li>
+                                <% }); %> <% }else{ %>
+                                <li><a href="#">No pages</a></li>
+                              <% } %>
+                              
+                            </ul>
+                          </li>
+                          <!--
+                          <li>
+                            <a href="news.html">News</a>
+                            <ul class="sub-menu">
+                              <li><a href="news.html">News</a></li>
+                              <li><a href="single-news.html">Single News</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="contact.html">Contact</a></li>
+                        -->
+                          <li>
+                            <a href="/user/home">Shop</a>
+                            <ul class="sub-menu">
+                              <li><a href="/user/home">Shop</a></li>
+                              <li><a href="/user/order">Orders</a></li>
+                              <li><a href="/user/cart">Cart</a></li>
+                              <li><a href="/user/wishList">Wish List</a></li>
+                              <li><a href="/user/wallet">Wallet</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div class="header-icons">
+                              <a class="mobile-hide" href="/user/myAccount"
+                                ><i class="fa fa-user"></i>
+                              </a>
+                              <a class="shopping-cart" href="/user/cart"
+                                ><i class="fas fa-shopping-cart"></i>
+                              </a>
+
+                              <a class="mobile-hide" href="/user/logout"
+                                >Logout</a>
+                              
+                            </div>
+                          </li>
+                        </ul>
+                      </nav>
+                    <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                    <div class="mobile-menu"></div>
+                    <!-- menu end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+<!-- search area -->
+<div class="search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                <div class="search-bar">
+                    <div class="search-bar-tablecell">
+                        <h3>Search For:</h3>
+                        <input type="text" placeholder="Keywords">
+                        <button type="submit">Search <i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search arewa -->
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Purchase your Order with great discout</p>
+                    <h1>Coupon</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+	<!-- check out section -->
+	<div class="checkout-section mt-150 mb-150">
+		<div class="container">
+			
+			
+				<div class="row">		
+					<div class="col-lg-8">
+            <div class="bg-light rounded p-4">
+                        <h5 class="mb-4 ">Order Details</h5>
+                        <div class="table-responsive">
+                            <div class="order-column mb-4">
+                                <h6 class="text-center">Order ID: <%= order.orderID %></h6>
+                                <table class="table table-bordered sub-table">
+                                  <thead>
+                                      <tr>
+                                          <th>Product Name</th>
+                                          <th>Quantity</th>
+                                          <th>Price Per Item</th>
+                                          <th>Subtotal</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      
+                                        <%
+                                            let preDiscountTotal = 0; // Variable to hold pre-discount total
+                                            order.orderItems.forEach(item => { 
+                                                preDiscountTotal += item.quantity * item.pricePerItem;
+                                        %>
+                                            <tr>
+                                                <td><%= item.name %></td>
+                                                <td><%= item.quantity %></td>
+                                                <td><%= item.pricePerItem %></td>
+                                                <td><%= (item.quantity * item.pricePerItem).toFixed(2) %></td>
+                                            </tr>
+                                        <% }); 
+                                       
+                                        %>
+                                        <tr>
+                                          <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td>
+                  
+                                                <% if (preDiscountTotal < 500) { %>
+                                                    <br>
+                                                    <strong>Shipping Cost:</strong> 50
+                                                    <% preDiscountTotal += 50 %>
+                                                <% } %>
+                                            </td>
+                                            
+                                        </tr>
+                                      <tr>
+                                        <td colspan="3"></td> <!-- Span the first three columns -->
+                                        <td><strong>Total Amount:</strong> <%= preDiscountTotal %></td>
+                                    </tr>
+                                    <!-- Display Discount and Percentage -->
+                                    <% if (order.discountAmount) { %>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td>
+                                                <strong>Discount Percentage:</strong>
+                                                <%= (order.discountAmount / preDiscountTotal * 100).toFixed(2) %>%
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td><strong>Discount Amount:</strong> <%= order.discountAmount %></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td><strong>Amount after Discount :</strong> <%= order.totalAmount %></td>
+                                        </tr>
+                                    <% } %>
+                                        
+                                  </tbody>
+                                </table>
+                                <!-- Display Total Amount -->
+                                
+                            </div>
+                        </div>
+            </div>           
+            
+              
+					</div>
+          <!--Select coupon--> 
+          
+          <div class="col-lg-4">
+            <div class="col-lg-12">
+              <% 
+              if (order.discountAmount === 0 && order.discountPercentage === 0) { 
+              if (validCoupons.length > 0) {
+                validCoupons.forEach((coupon) => { %>
+                  <div class="coupon-box">
+                    <p><strong>Coupon: <%= coupon.code %></strong></p>
+                    <p><strong>Discount: <%= coupon.discountPercentage %>%</strong> </p>
+                    <!-- Add more coupon details as needed -->
+                  </div>
+                <% });
+              } else { %>
+                <p>No available coupons at the moment.</p>
+              <% } }%>
+            </div>
+            <div  class="coupon-section mb-5 p-3">
+              <% if (order.discountAmount === 0 && order.discountPercentage === 0) { %>
+								<h6 style="border: 1px solid #ddd; color: rgb(0, 200, 255); cursor: pointer;" onclick="toggleCouponSection()">Have a promo coupon?</h6>
+								<h3 style="display: none;">Apply Coupon</h3>
+								<div class="coupon-form-wrap" style="display: none;">
+                  
+									<form action="/user/applyCoupon" method="post" id="applyCouponForm">
+                    <p>
+                        <input type="hidden" name="id" value="<%= order._id %>">
+                        <input type="text" id="couponCodeInput" placeholder="Coupon" name="code">
+                        <button type="button" class="custom-button-2" onclick="applyCoupon()">Apply</button>
+                    </p>
+                </form>
+                
+								</div>
+              <% } %>
+                  <div>
+                      <% 
+                          if(typeof message2 !== 'undefined'){
+                              %>
+                              <h6 class="text-start" style="color: rgb(15, 185, 15);"><%= message2 %></h6>
+                              <%
+                          }
+                      %>
+                      <% 
+                          if(typeof message1 !== 'undefined'){
+                              %>
+                              <h6 class="text-start" style="color: rgb(255, 0, 0);"><%= message1 %></h6>
+                              <%
+                          }
+                      %>
+                  </div>
+							  </div>
+              <div >
+							
+              <form id="razorpayForm" action="/user/onlinePayment" method="post">
+                <input type="hidden" name="paymentMethod" value="<%= order.paymentMethod %>">
+                <input type="hidden" name="id" value="<%= order._id %>">
+                <input style="width: 50%;" type="submit" value="Go to Payment">
+              </form>
+                        
+            </div>
+          </div>
+												
+				</div>
+	
+		</div>
+	</div>
+	<!-- end check out section -->
+
+	
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">About us</h2>
+						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Get in Touch</h2>
+						<ul>
+							<li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+							<li>support@fruitkha.com</li>
+							<li>+00 111 222 3333</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="/user">Home</a></li>
+							<li><a href="/user">About</a></li>
+							<li><a href="/user">Shop</a></li>
+							<li><a href="/user">News</a></li>
+							<li><a href="/user">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">Subscribe</h2>
+						<p>Subscribe to our mailing list to get the latest updates.</p>
+						<form action="/user">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <p>Copyrights &copy; 2019 - <a href="/user">AQUApets.in</a>,  All Rights Reserved.<br>
+                    
+                </p>
+            </div>
+            <div class="col-lg-6 text-right col-md-12">
+                <div class="social-icons">
+                    <ul>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	
+  $(document).ready(function() {
+    $('.product-quantity input').on('input', function() {
+      var quantity = parseInt($(this).val());
+      var price = parseFloat($(this).closest('.table-body-row').find('.product-price').text().replace('$', '').trim());
+      var totalPrice = quantity * price;
+
+      $(this).closest('.table-body-row').find('.product-total').text( totalPrice.toFixed(2));
+    });
+  });
+
+	
+</script>
+
+<!-- Add this script to handle Razorpay payment -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.pay-form').submit(function(e){
+      e.preventDefault();
+
+      var formData = $(this).serialize();
+
+      $.ajax({
+        url: "/user/razorpay-order",
+        type: "post",
+        data: formData,
+        success: function(res){
+          if(res.success){
+            var options = {
+            "key": ""+res.key_id+"",
+            "amount": ""+res.amount+"",
+            "currency": "INR",
+            "name": ""+res.name+"",
+            "order_id": ""+res.order_id+"",
+            "handler": function(response){
+              
+              verifyPayment(response,res.order)
+              alert("Payment Succeeded");
+              window.location.href = '/user/orderStatus';
+              // alert(response.razorpay_payment_id)
+              // alert(response.razorpay_order_id)
+              // alert(response.razorpay_signature)
+            },
+            "prefill": {
+              "contact": ""+res.mobile+"",
+              "name": ""+res.name+"",
+              "email": ""+res.email+""
+            },
+            "notes": {
+              "description": "User orders"
+            },
+            "theme": {
+              "color": "#F37254"
+            }
+          }
+          var razorpayObject = new Razorpay(options)
+          razorpayObject.on('payment.failed', function (response) {
+              alert('payment failed');
+          });
+          razorpayObject.on('payment.success', function () {
+              // Redirect to the order status page after successful payment
+              window.location.href = '/user/orderStatus';
+          });
+          razorpayObject.open();
+          }else{
+          alert(res.msg)
+          }
+        }
+      })
+    })
+  })
+  function verifyPayment(payment,order){
+    console.log('Verifying payment:', payment);
+    console.log('Order details:', order);
+    $.ajax({
+      url: "/user/verifyPayment",
+      type: "post",
+      data: { payment, order  },
+      success: function(updateRes){
+        console.log('Verification response:', updateRes);
+        if(updateRes.success){
+          alert("Payment Succeeded");
+          window.location.href = `/user/orderStatus`;
+        } else {
+          alert("Failed to update order status");
+        }
+      },
+      error: function (error) {
+      console.error('Error during payment verification:', error);
+      alert("Error during payment verification");
+    }
+    });
+  }
+  
+  function toggleCouponSection() {
+        var applyCouponHeader = document.querySelector('.coupon-section h3');
+        var couponFormWrap = document.querySelector('.coupon-form-wrap');
+
+        if (applyCouponHeader.style.display === 'none') {
+            applyCouponHeader.style.display = 'block';
+            couponFormWrap.style.display = 'block';
+        } else {
+            applyCouponHeader.style.display = 'none';
+            couponFormWrap.style.display = 'none';
+        }
+    }
+
+    function applyCoupon() {
+        var couponCodeInput = document.getElementById('couponCodeInput');
+        
+        // Get the coupon code
+        var couponCode = couponCodeInput.value;
+
+        // Set the coupon code value in the form
+        document.getElementById('applyCouponForm').elements['code'].value = couponCode;
+
+        // Submit the form
+        document.getElementById('applyCouponForm').submit();
+    }
+
+</script>
+
+
+
+	
+<%- include('../layouts/footer.ejs')  %>

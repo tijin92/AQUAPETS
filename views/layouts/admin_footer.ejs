@@ -1,0 +1,438 @@
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+    
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/chart/chart.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+    
+
+
+    <!-- Template Javascript -->
+    <script src="/js/main.js"></script>
+    
+    
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                const searchItem = $(this).val();
+
+                // Make an AJAX request to the server to fetch search results.
+                $.ajax({
+                    url: '/admin/searchUserList',
+                    method: 'POST',
+                    data: { searchItem },
+                    success: function(data) {
+                        // Update the search results div with the data from the server.
+                        $('#searchResults').html(data);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        //unlist product
+        function confirmUnlist(event) {
+        event.preventDefault(); 
+
+        const isUnlist = event.currentTarget.getAttribute("data-unlist") === "0";
+        const unlistButton = event.currentTarget;
+
+            if (isUnlist) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure?',
+                    text: 'Are you sure you want to unlist this product?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, unlist it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = unlistButton.getAttribute("href");
+                    }
+                });
+            } else {
+                window.location.href = unlistButton.getAttribute("href");
+            }
+        }
+
+        // Trigger the click event on the "unlist" button after the user clicks "Yes" in the SweetAlert confirmation
+        function triggerUnlistButtonClick() {
+            var unlistButton = document.getElementById('unlist');
+            if (unlistButton) {
+                unlistButton.click();
+            }
+        }
+
+        // Delete product
+        function confirmDelete(event) {
+            event.preventDefault();
+
+            const deleteUrl = event.currentTarget.getAttribute("href");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this product!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+
+        //delete Category
+        function confirmCategoryDelete(event){
+            event.preventDefault();
+
+            const deleteUrl = event.currentTarget.getAttribute("href");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover the product under this Category!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+
+        }
+
+        //Toast message 
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('successMessage');
+        const errorMessage = urlParams.get('errorMessage');
+        if (successMessage) {
+            const toast = new bootstrap.Toast(document.querySelector('.toast'));
+            const successToast = document.getElementById('successToast');
+            successToast.textContent = successMessage;
+            toast.show();
+        }else if(errorMessage){
+            const toast = new bootstrap.Toast(document.querySelector('.toast'));
+            const successToast = document.getElementById('successToast');
+            successToast.textContent = errorMessage;
+            toast.show();
+        }
+
+        //login form
+        document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('admin-login').onsubmit = function (e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;       
+                let errors = [];
+
+                if (email.trim() === '') {
+                    errors.push('Please enter your email address.');
+                } else if (!isValidEmail(email)) {
+                    errors.push('Please enter a valid email address.');
+                }
+
+                if (password.trim() === '') {
+                    errors.push('Please enter your password.');
+                } else if (password.length < 8) {
+                    errors.push('Password must be at least 8 characters long.');
+                } else if (!isStrongPassword(password)) {
+                    errors.push('Password should be strong (e.g., include uppercase, lowercase, numbers, and special characters).');
+                } 
+
+                if (errors.length > 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: errors.join('\n')
+                    });
+                    return false;
+                }else{
+                    document.getElementById('admin-login').submit();
+                }
+
+                
+            };
+
+            function isValidEmail(email) {
+                const emailRegex = /^\S+@\S+\.\S+$/;
+                return emailRegex.test(email);
+            }
+
+            function isStrongPassword(password) {
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+                return passwordRegex.test(password);
+            }
+        });
+
+        //edit product
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('editProduct');
+
+            form.addEventListener('submit', function (event) {
+                if (!validateForm()) {
+                    event.preventDefault();
+                }
+            });
+
+            function validateForm() {
+                var name = document.getElementById('name').value;
+                var category = document.getElementById('category').value;
+                var price = document.getElementById('price').value;
+                var offerPrice = document.getElementById('offerPrice').value;
+                var stock = document.getElementById('stock').value;
+                var description = document.getElementById('description').value;
+                var imageInput = document.getElementById('formFileMultiple');
+                var imageFiles = imageInput.files;
+
+                // Check if the name starts with an alphabet
+                if (!/^[A-Za-z]/.test(name)) {
+                    showErrorAlert('Product Name must start with an alphabet.');
+                    return false;
+                }
+
+                if (name.trim() === '') {
+                    showErrorAlert('Product Name cannot be empty.');
+                    return false;
+                }
+
+                if (category.trim() === '') {
+                    showErrorAlert('Please select a Product Category.');
+                    return false;
+                }
+
+                if (isNaN(price) || price <= 0) {
+                    showErrorAlert('Please enter a valid Price.');
+                    return false;
+                }
+
+                if ( offerPrice.trim() !== '' && (isNaN(offerPrice) || offerPrice <= 0)) {
+                    showErrorAlert('Please enter a valid Offer Price greater than 0.');
+                    return false;
+                }
+
+                if (isNaN(stock) || stock <= 0) {
+                    showErrorAlert('Please enter a valid Stock value.');
+                    return false;
+                }
+
+                if (description.trim() === '') {
+                    showErrorAlert('Product Description cannot be empty.');
+                    return false;
+                }
+
+                // Image validation (optional)
+                if (imageFiles.length > 0) {
+                    for (var i = 0; i < imageFiles.length; i++) {
+                        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                        if (!allowedExtensions.test(imageFiles[i].name)) {
+                            showErrorAlert('Invalid image file type. Please upload only JPG, JPEG, PNG, or GIF files.');
+                            return false;
+                        }
+                    }
+                }
+
+    
+
+                return true;
+            }
+
+            function showErrorAlert(message) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: message,
+                });
+            }
+        });
+
+        //add product
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('addProduct');
+
+            form.addEventListener('submit', function (event) {
+                if (!validateForm()) {
+                    event.preventDefault();
+                }
+            });
+
+            function validateForm() {
+                var name = document.getElementById('name').value;
+                var category = document.getElementById('category').value;
+                var price = document.getElementById('price').value;
+                var offerPrice = document.getElementById('offerPrice').value;
+                var stock = document.getElementById('stock').value;
+                var description = document.getElementById('floatingTextarea').value;
+                var imageInput = document.getElementById('formFileMultiple');
+                var imageFiles = imageInput.files;
+
+            
+                if (!/^[A-Za-z]/.test(name)) {
+                    showErrorAlert('Product Name must start with an alphabet.');
+                    return false;
+                }
+
+                if (name.trim() === '') {
+                    showErrorAlert('Product Name cannot be empty.');
+                    return false;
+                }
+
+                if (category.trim() === '' || category === 'select a category below') {
+                    showErrorAlert('Please select a valid Product Category.');
+                    return false;
+                }
+
+                if (isNaN(price) || price <= 0) {
+                    showErrorAlert('Please enter a valid Price greater than 1.');
+                    return false;
+                }
+
+                if ( offerPrice.trim() !== '' && (isNaN(offerPrice) || offerPrice <= 0)) {
+                    showErrorAlert('Please enter a valid Offer Price greater than 0.');
+                    return false;
+                }
+
+                if (isNaN(stock) || stock < 0) {
+                    showErrorAlert('Please enter a valid Stock value.');
+                    return false;
+                }
+
+                if (description.trim() === '') {
+                    showErrorAlert('Product Description cannot be empty.');
+                    return false;
+                }
+
+    
+                if (imageFiles.length === 0) {
+                    showErrorAlert('Please select at least one image.');
+                    return false;
+                }
+
+            
+                for (var i = 0; i < imageFiles.length; i++) {
+                    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                    if (!allowedExtensions.test(imageFiles[i].name)) {
+                        showErrorAlert('Invalid image file type. Please upload only JPG, JPEG, PNG, or GIF files.');
+                        return false;
+                    }
+                }
+
+            
+
+                return true;
+            }
+
+            function showErrorAlert(message) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: message,
+                });
+            }
+        });
+
+
+        //block user
+
+        function confirmBlockUser(event, userId) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            const isBlocking = event.currentTarget.innerText === 'Block'; // Check if the action is to block
+
+            if (isBlocking) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure?',
+                    text: 'Are you sure you want to block this user?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, block!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `/admin/blockUser?id=${userId}`;
+                        // showSuccessAlert('User has been blocked successfully.');
+                    }
+                });
+            } else {
+                // For other actions (like unblocking), directly navigate to the URL without showing a confirmation
+                window.location.href = `/admin/blockUser?id=${userId}`;
+            }
+        }
+
+        // Function to display a success alert
+        function showSuccessAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: message
+            });
+        }
+
+
+        function confirmBlock(event, isBlocked, id) {
+        if (isBlocked === '0') {
+            // Use SweetAlert to confirm the action
+            Swal.fire({
+            title: 'Block Category?',
+            text: 'Are you sure you want to block this category?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Block',
+            cancelButtonText: 'Cancel',
+            allowOutsideClick: false // Prevent dismissing by clicking outside
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, display a success alert
+                Swal.fire({
+                title: 'Category Blocked!',
+                text: 'The category has been successfully blocked.',
+                icon: 'success'
+                }).then(() => {
+                // Proceed with the link
+                redirectToCategoryBlock(id);
+                });
+            }
+            });
+
+            // Prevent the default behavior of the link
+            event.preventDefault();
+        }
+        // If unblocking or already blocked, allow the link to proceed
+        }
+
+        function redirectToCategoryBlock(id) {
+        // Redirect to the specified href link with the category ID
+        window.location.href = `/admin/blockCategory?id=${id}`;
+        }
+
+    
+    </script>
+  
+
+</body>
+
+
+
+</html>

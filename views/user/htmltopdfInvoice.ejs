@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>AQUApets.in</title>
+
+	<!-- sweet alert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="/assets/img/logo copy.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="/assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="/assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="/assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="/assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="/assets/css/responsive.css">
+	
+
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	
+	<style>
+		form {
+		  display: flex;
+		  flex-direction: column;
+		}
+	  
+		input[type="text"] {
+		  border: none;
+		  border-bottom: 1px solid black; /* You can adjust the color and thickness */
+		  margin-bottom: 10px; /* Optional: Add some spacing */
+		}
+        body {
+            padding: 20px; /* Adjust the padding value according to your preference */
+        }
+        @page {
+            size: A4; /* Set your preferred page size */
+            margin: 20px; /* Set your preferred margin */
+        }
+        .table-bordered th {
+            border: 1px solid #dddddd;
+        }
+        .site-logo {
+            display: flex;
+            align-items: center; 
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .logo-container img {
+            margin-right: 10px; 
+        }
+
+	  
+	</style>
+
+</head>
+<body>
+	
+	<!--PreLoader-->
+<div class="loader">
+    <div class="loader-inner">
+        <div class="circle"></div>
+    </div>
+</div>
+<!--PreLoader Ends-->
+
+<!-- header -->
+<div class="top-header-area" id="sticker">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-center">
+                <div class="main-menu-wrap">
+                    <!-- logo -->
+                    <div class="site-logo mb-3">
+                        <p class="logo-container">
+                            <img src="http://localhost:3000/images/logo copy.png" alt="" width="50px">
+                            <span class="text-white text-bold ">AQUApets.in</span>
+                        </p>
+                    </div>
+                    <!-- logo -->
+                    
+                    <div ></div>
+                    <!-- menu end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+<!-- end breadcrumb section -->
+
+	<!-- check out section -->
+	<div class="checkout-section mt-150 mb-150">
+		<div class="container">
+			
+			<form id="checkoutForm" class="pay-form" action="/user/razorpay-order" method="post" enctype="application/x-www-form-urlencoded">
+				<div class="row">		
+					<div class="col-lg-12">
+                        <div class="bg-light rounded p-4">
+                            <h5 class="mb-4 ">Order Details</h5>
+                            <div class="table-responsive">
+                                <div class="order-column mb-4">
+                                    <h6 class="text-center">Order ID: <%= order.orderID %></h6>
+                                    <table width="100%" class="table table-bordered sub-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-bordered">Product Name</th>
+                                            <th class="table-bordered">Quantity</th>
+                                            <th class="table-bordered">Price Per Item</th>
+                                            <th class="table-bordered">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <%
+                                            let preDiscountTotal = 0; // Variable to hold pre-discount total
+                                            order.orderItems.forEach(item => { 
+                                                preDiscountTotal += item.quantity * item.pricePerItem;
+                                        %>
+                                            <tr>
+                                                <td><%= item.name %></td>
+                                                <td><%= item.quantity %></td>
+                                                <td><%= item.pricePerItem %></td>
+                                                <td><%= item.quantity * item.pricePerItem %></td>
+                                            </tr>
+                                        <% }); 
+                                        
+                                        %>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td>
+                    
+                                                <% if (preDiscountTotal < 500) { %>
+                                                    <br>
+                                                    <strong>Shipping Cost:</strong> 50
+                                                    <% preDiscountTotal += 50 %>
+                                                <% } %>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                        <td colspan="3"></td> <!-- Span the first three columns -->
+                                        <td><strong>Total Amount:</strong> <%= preDiscountTotal %></td>
+                                    </tr>
+                                    <!-- Display Discount and Percentage -->
+                                    <% if (order.discountAmount) { %>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td>
+                                                <strong>Discount Percentage:</strong>
+                                                <%= (order.discountAmount / preDiscountTotal * 100).toFixed(2) %>%
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td><strong>Discount Amount:</strong> <%= order.discountAmount %></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td> <!-- Span the first three columns -->
+                                            <td><strong>Amount after Discount :</strong> <%= order.totalAmount %></td>
+                                        </tr>
+                                    <% } %>
+                                        
+                                    </tbody>
+                                    </table>
+                                    <!-- Display Total Amount -->
+                                    
+                                </div>
+                            </div>
+                        </div>           
+				    </div>								
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- end check out section -->
+	
+	<!-- copyright -->
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <br>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+	
+  $(document).ready(function() {
+    $('.product-quantity input').on('input', function() {
+      var quantity = parseInt($(this).val());
+      var price = parseFloat($(this).closest('.table-body-row').find('.product-price').text().replace('$', '').trim());
+      var totalPrice = quantity * price;
+
+      $(this).closest('.table-body-row').find('.product-total').text( totalPrice.toFixed(2));
+    });
+  });
+
+	
+</script>
+
+	
+<!-- end copyright -->
+	
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+
+	<!-- jquery -->
+	<script src="/assets/js/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap -->
+	<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+	<!-- count down -->
+	<script src="/assets/js/jquery.countdown.js"></script>
+	<!-- isotope -->
+	<script src="/assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<!-- waypoints -->
+	<script src="/assets/js/waypoints.js"></script>
+	<!-- owl carousel -->
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<!-- magnific popup -->
+	<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+	<!-- mean menu -->
+	<script src="/assets/js/jquery.meanmenu.min.js"></script>
+	<!-- sticker js -->
+	<script src="/assets/js/sticker.js"></script>
+	<!-- main js -->
+	<script src="/assets/js/main.js"></script>
+
+    
+	
+ 
+	
+
+</body>
+
+
+</html>

@@ -1,0 +1,466 @@
+<%- include('../layouts/header.ejs')  %> 
+	
+	<!--PreLoader-->
+<div class="loader">
+    <div class="loader-inner">
+        <div class="circle"></div>
+    </div>
+</div>
+<!--PreLoader Ends-->
+
+<!-- header -->
+<div class="top-header-area" id="sticker">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-center">
+                <div class="main-menu-wrap">
+                    <!-- logo -->
+                    <div class="site-logo">
+                        <a href="/">
+                            <img src="/images/logo copy.png" alt="" width="50px">
+                            <span class="text-white text-bold">AQUApets.in</span>
+                        </a>
+                    </div>
+                    <!-- logo -->
+
+                    <!-- menu start -->
+                    <nav class="main-menu">
+                        <ul>
+                          <li class="current-list-item">
+                            <a href="/user/home">Home</a>
+                          </li>
+                          <!-- <li><a href="about.html">About</a></li> -->
+                          <li>
+                            <a href="#">Categories</a>
+                            <ul class="sub-menu">
+            
+                              <% if(allCategory.length > 0){ %> <% allCategory.forEach((category,
+                                index) => { %>
+                                <li><a href="/user/<%= category.name %>"><%= category.name %></a></li>
+                                <% }); %> <% }else{ %>
+                                <li><a href="#">No pages</a></li>
+                              <% } %>
+                              
+                            </ul>
+                          </li>
+						  <!--
+                          <li>
+                            <a href="news.html">News</a>
+                            <ul class="sub-menu">
+                              <li><a href="news.html">News</a></li>
+                              <li><a href="single-news.html">Single News</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="contact.html">Contact</a></li>
+						-->
+                          <li>
+                            <a href="/user/home">Shop</a>
+                            <ul class="sub-menu">
+                              <li><a href="/user/home">Shop</a></li>
+                              <li><a href="/user/order">Orders</a></li>
+                              <li><a href="/user/cart">Cart</a></li>
+							  <li><a href="/user/wishList">Wish List</a></li>
+							  <li><a href="/user/wallet">Wallet</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div class="header-icons">
+                              <a class="mobile-hide" href="/user/myAccount"
+                                ><i class="fa fa-user"></i>
+                              </a>
+                              <a class="shopping-cart" href="/user/cart"
+                                ><i class="fas fa-shopping-cart"></i>
+                              </a>
+
+                              <a class="mobile-hide" href="/user/logout"
+                                >Logout</a>
+                              
+                            </div>
+                          </li>
+                        </ul>
+                      </nav>
+                    <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                    <div class="mobile-menu"></div>
+                    <!-- menu end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+<!-- search area -->
+<div class="search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                <div class="search-bar">
+                    <div class="search-bar-tablecell">
+                        <h3>Search For:</h3>
+                        <input type="text" placeholder="Keywords">
+                        <button type="submit">Search <i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search arewa -->
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Place Your Order</p>
+                    <h1>Check Out Product</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+	<!-- check out section -->
+	<div class="checkout-section mt-150 mb-150">
+		<div class="container">
+			<div>
+                    <% 
+                        if(typeof message2 !== 'undefined'){
+                            %>
+                            <h6 class="text-start" style="color: rgb(15, 185, 15);"><%= message2 %></h6>
+                            <%
+                        }
+                    %>
+                    <% 
+                        if(typeof message1 !== 'undefined'){
+                            %>
+                            <h6 class="text-start" style="color: rgb(255, 0, 0);"><%= message1 %></h6>
+                            <%
+                        }
+                    %>
+            </div>
+			<form id="checkoutForm" class="pay-form" action="/user/checkout" method="post" enctype="application/x-www-form-urlencoded">
+				<div class="row">		
+					<div class="col-lg-8">
+						<div class="checkout-accordion-wrap">
+							<div class="accordion" id="accordionExample">
+							
+								<div class="card single-accordion">
+									<div class="card-header" id="headingOne">
+										<h5 class="mb-0">
+											<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+												Delivery Address
+											</button>
+										</h5>
+									</div>
+
+									<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+										<div class="card-body">
+											<div class="billing-address-form">
+											
+												
+												<p><label for="name">Name</label>
+													<input type="text" id="name" name="name" placeholder="Name" required></p>
+												<p><label for="email">Email</label>
+													<input type="email" id="email" name="email" placeholder="Email" required></p>
+												<p><label for="mobile">Mobile</label>
+													<input type="tel" id="mobile" name="mobile" placeholder="Phone" required></p>
+												<p id="existingAddressField">
+													<label>Select Address</label>
+													<% user.address.forEach((address, index) => { %>
+														<div>
+															<input type="radio" id="<%= `address_${index}` %>" name="userAddress" value="<%= address._id %>" onclick="toggleNewAddressForm()" required>
+															<label for="<%= `address_${index}` %>">
+																<%= `${address.house_name}, ${address.street}, ${address.city}, ${address.state}, ${address.postalCode}, ${address.country}` %>
+															</label>
+														</div>
+													<% }); %>
+													
+												</p>
+												<a href="/user/myAccount">add new address</a>
+
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="card single-accordion">
+									<div class="card-header" id="headingThree">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+											Card Details
+											</button>
+										</h5>
+									</div>
+									<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+										<div class="card-body">
+											<div class="card-details">								
+											<!-- Payment Method Dropdown -->
+												<p>
+													<label for="paymentMethod">Payment Method</label>
+													<input type="hidden" id="totalWalletAmount" name="totalWalletAmount" value="<%= wallet.totalWalletAmount %>">
+													<select id="paymentMethod" name="paymentMethod" onchange="updatePaymentMethod()" required>
+														<% for (const method of [ 'razorpay', 'Cash On Delivery', 'wallet']) { %>
+															<option value="<%= method %>"><%= method %></option>
+														<% } %>
+													</select>
+												</p>
+												<p id="walletBalanceDisplay" style="display: none; font-weight: bold;">Wallet Balance: Rs.<%= wallet.totalWalletAmount.toFixed(2) %> /-</p>
+												<p id="walletSufficient" style="display: none;color: green; font-weight: bold;">Sufficient Amount in Wallet.Proceed to Place Order</p>
+												<p id="walletdeficient" style="display: none; color: brown; font-weight: bold;">Insufficient amount in Wallet</p>
+											</div>
+										</div>
+									</div>
+						  		</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 ">
+						<div class="order-details-wrap">
+							<table class="total-table">
+                        <thead class="total-table-head">
+                            <tr class="table-total-row">
+                                <th>Total</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <% let total = 0; %>
+                                <% let shipping = 50; %>
+                                <% let total_amount = 0; %>
+                            <% if (Array.isArray(cartItems) && cartItems.length > 0) { %>
+                                
+                                <% cartItems.forEach(item => { %>
+                                    <% if (item.product_id.offer && item.product_id.offer.status && item.product_id.offerPrice && new Date(item.product_id.offer.expiryDate) >= new Date()) { %>
+                                    <% total = total + (item.product_id.offerPrice * item.quantity); %>
+                                    <% } else if (item.product_id.category && item.product_id.category.offer && item.product_id.category.offer.status && new Date(item.product_id.category.offer.expiryDate) >= new Date()) { %>
+                                        <% const offerPercentage = 100 - item.product_id.category.offer.percentage; %>
+                                        <% const offerPrice = (item.product_id.price * offerPercentage) / 100; %>
+                                        <% total = total + (offerPrice.toFixed(0) * item.quantity); %>
+                                    <% } else { %>
+                                    <% total = total + (item.product_id.price * item.quantity); %>
+                                    <% } %>
+                                <% }); %>
+                                <tr class="total-data">
+                                    <td><strong>Subtotal: </strong></td>
+                                    <td><%= total %></td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Shipping: </strong></td>
+                                    <td><% if (total < 500) { %><%= shipping %><% } else { %><%= shipping = 0 %><% } %></td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Total: </strong></td>
+                                    <td><%= total_amount = total + shipping %></td>
+                                </tr>
+                            <% } else { %>
+                                <tr class="total-data">
+                                    <td><strong>Subtotal: </strong></td>
+                                    <td>0</td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Shipping: </strong></td>
+                                    <td>50</td>
+                                </tr>
+                                <tr class="total-data">
+                                    <td><strong>Total: </strong></td>
+                                    <td>0</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                        </table>
+						<input type="hidden" id="total_amount" name="total_amount" value="<%= total_amount %>">
+							
+							<input id="razorpayBtn" type="submit" value="Place Order">
+							
+						</div>
+					</div>							
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- end check out section -->
+
+	
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">About us</h2>
+						<p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Get in Touch</h2>
+						<ul>
+							<li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+							<li>support@fruitkha.com</li>
+							<li>+00 111 222 3333</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="/user">Home</a></li>
+							<li><a href="/user">About</a></li>
+							<li><a href="/user">Shop</a></li>
+							<li><a href="/user">News</a></li>
+							<li><a href="/user">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">Subscribe</h2>
+						<p>Subscribe to our mailing list to get the latest updates.</p>
+						<form action="/user">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <p>Copyrights &copy; 2019 - <a href="/user">AQUApets.in</a>,  All Rights Reserved.<br>
+                    
+                </p>
+            </div>
+            <div class="col-lg-6 text-right col-md-12">
+                <div class="social-icons">
+                    <ul>
+                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+  document.getElementById('addressForm').addEventListener('submit', function (event) {
+
+        const selectedAddress = document.querySelector('input[name="userAddress"]:checked');
+		console.log()
+       
+        if (selectedAddress) {
+
+            const formData = new FormData(event.target);
+            formData.append('selectedAddress', selectedAddress.value);
+
+
+            event.formData = formData;
+        } else {
+
+            event.preventDefault(); 
+            alert('Please select an address.'); 
+        }
+    });
+
+	// Function to display SweetAlert with a custom message
+  function showAlert(message) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: message,
+    });
+  }
+
+  document.getElementById('checkoutForm').addEventListener('submit', function (event) {
+    // Validate form fields
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const mobile = document.getElementById('mobile').value;
+    const selectedAddress = document.querySelector('input[name="userAddress"]:checked');
+
+    if (!name || !email || !mobile || !selectedAddress) {
+      event.preventDefault(); // Prevent form submission
+
+      showAlert('Please fill in all the required fields.'); // Display SweetAlert
+    }
+  });
+
+  $(document).ready(function () {
+    $('.product-quantity input').on('input', function () {
+      var quantity = parseInt($(this).val());
+      var price = parseFloat(
+        $(this).closest('.table-body-row').find('.product-price').text().replace('$', '').trim()
+      );
+      var totalPrice = quantity * price;
+
+      $(this).closest('.table-body-row').find('.product-total').text(totalPrice.toFixed(2));
+    });
+  });
+
+  function updatePaymentMethod() {
+        const selectedPaymentMethod = document.getElementById('paymentMethod').value;   
+        const walletBalance = parseFloat(document.getElementById('totalWalletAmount').value);
+        const total_amount = parseFloat(document.getElementById('total_amount').value);		
+        const placeOrderButton = document.getElementById('razorpayBtn');
+		const walletBalanceDisplay = document.getElementById('walletBalanceDisplay');
+		const walletSufficient = document.getElementById('walletSufficient');
+		const walletdeficient = document.getElementById('walletdeficient')
+
+        if (selectedPaymentMethod === 'wallet' && walletBalance < total_amount) {
+          
+            Swal.fire({
+            icon: 'error',
+            title: 'Insufficient Funds',
+            text: 'Please select any Other Payment Method.',
+        });
+		placeOrderButton.disabled = true;
+		
+		if (selectedPaymentMethod === 'wallet') {	
+			walletBalanceDisplay.style.display = 'block';
+			walletdeficient.style.display = 'block'
+			walletSufficient.style.display = 'none'
+		} else {	
+			walletBalanceDisplay.style.display = 'none';
+			walletdeficient.style.display = 'none'
+			walletSufficient.style.display = 'none'
+		}
+		
+        } else {
+            placeOrderButton.disabled = false;
+
+			if (selectedPaymentMethod === 'wallet') {	
+				walletBalanceDisplay.style.display = 'block';
+				walletSufficient.style.display = 'block'
+				walletdeficient.style.display = 'none'
+			} else {			
+				walletBalanceDisplay.style.display = 'none';
+				walletSufficient.style.display = 'none'
+				walletdeficient.style.display = 'none'
+			}
+        }
+    }
+
+
+</script>
+
+
+	
+<%- include('../layouts/footer.ejs')  %>
