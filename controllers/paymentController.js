@@ -11,8 +11,8 @@ const Wallet = require('../models/walletModel')
 const {RAZORPAY_ID_KEY, RAZORPAY_SECRET_KEY} = process.env
 
 const instance = new razorpay({ 
-    key_id: RAZORPAY_ID_KEY, 
-    key_secret: RAZORPAY_SECRET_KEY 
+    key_id: 'rzp_test_X9pXTKfzgE8y3Y', 
+    key_secret: '6u5d9EwmkSkTcAmUWCUYekKY'
 })
 
 instance.orders.create({
