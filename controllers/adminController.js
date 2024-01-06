@@ -9,7 +9,7 @@ const excelJS = require('exceljs')
 
 //html to pdf generate require things
 const ejs = require('ejs')
-const pdfPoppler = require('pdf-poppler')
+const pdf = require('html-pdf')
 const fs = require('fs')
 const path = require('path')
 
@@ -404,20 +404,18 @@ const salesReportPDF = async (req,res)=>{
         const filepathName = path.resolve(__dirname,'../views/admin/htmltopdf.ejs')
         const htmlString = fs.readFileSync(filepathName).toString()
         let options = {
-            format: 'A4',
-            out: 'salesReport.pdf'
+            format: 'Letter'
         }
         const ejsData = ejs.render(htmlString, data);
 
-        pdfPoppler(ejsData, options, (err, resBuffer) => {
+        pdf.create(ejsData, options).toBuffer((err, buffer) => {
             if (err) {
                 console.log('Error creating PDF:', err);
-                return res.status(500).render('error', { message: err.message });
-            }
-
+                res.status(500).render('error',{message: err.message})
+            } 
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'attachment; filename=salesReport.pdf');
-            res.end(resBuffer);
+            res.setHeader('Content-Disposition', `attachment; filename=salesReport.pdf`);
+            res.end(buffer);
         });
 
     } catch (error) {
