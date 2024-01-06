@@ -7,7 +7,7 @@ const Wallet = require('../models/walletModel')
 
 //html to pdf generate require things
 const ejs = require('ejs')
-const pdf = require('html-pdf')
+const pdfPoppler = require('pdf-poppler')
 const fs = require('fs')
 const path = require('path')
 
@@ -310,17 +310,19 @@ const invoice = async (req,res)=>{
         const filePathName = path.resolve(__dirname,'../views/user/htmltopdfInvoice.ejs')
         const htmlString = fs.readFileSync(filePathName).toString()
         let options = {
-            fomrat: 'Letter'
+            format: 'A4',
+            out: 'output.pdf',
         }
         const ejsData = ejs.render(htmlString, data);
-        pdf.create(ejsData, options).toBuffer((err, buffer) => {
+        pdfPoppler(ejsData, options, (err, resBuffer) => {
             if (err) {
                 console.log('Error creating PDF:', err);
-                res.status(500).render('error',{message: err.message})
-            } 
+                return res.status(500).render('error', { message: err.message });
+            }
+
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename=Order_Invoice.pdf`);
-            res.end(buffer);
+            res.setHeader('Content-Disposition', 'attachment; filename=Order_Invoice.pdf');
+            res.end(resBuffer);
         });
 
     } catch (error) {
